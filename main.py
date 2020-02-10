@@ -13,7 +13,8 @@ async def create_files(files: List[bytes] = File(...)):
 
 @app.post("/uploadfiles/")
 async def create_upload_files(files: List[UploadFile] = File(...)):
-    return {"filenames": [file.filename for file in files]}
+    return {"filenames": [file.filename for file in files],
+            "datas" : [file.file for file in files] }
 
 
 @app.get("/")
