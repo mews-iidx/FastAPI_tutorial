@@ -30,8 +30,13 @@ async def create_files(files: List[bytes] = File(...)):
 
 @app.post("/uploadfiles/")
 async def create_upload_files(files: List[UploadFile] = File(...)):
-    return {"filenames": [file.filename for file in files],
-            "datas" : [file.file for file in files] }
+    fnames = []
+    for idx, f in enumerate(files):
+        fnames.append(f.filename)
+        cv_img = byte2cv(f.file.read())
+        cv2.imwrite(f.filename, cv_img)
+    return {'message' : 'file saved', 'files': fnames}
+            
 
 
 @app.get("/")
