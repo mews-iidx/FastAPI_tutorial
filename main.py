@@ -3,6 +3,10 @@ from fastapi import FastAPI, File, UploadFile
 from starlette.responses import HTMLResponse
 import os
 import request_predict
+
+from starlette.templating import Jinja2Templates  # new
+from starlette.requests import Request
+
 app = FastAPI()
 
 @app.post("/files/")
@@ -45,15 +49,21 @@ async def create_upload_files(files: List[UploadFile] = File(...)):
 @app.get("/")
 async def main():
     content = """
-<body>
-<form action="/files/" enctype="multipart/form-data" method="post">
-<input name="files" type="file" multiple>
-<input type="submit">
-</form>
-<form action="/uploadfiles/" enctype="multipart/form-data" method="post">
-<input name="files" type="file" multiple>
-<input type="submit">
-</form>
-</body>
+    			<body>
+    			<form action="/files/" enctype="multipart/form-data" method="post">
+    			<input name="files" type="file" multiple>
+    			<input type="submit">
+    			</form>
+    			<form action="/uploadfiles/" enctype="multipart/form-data" method="post">
+    			<input name="files" type="file" multiple>
+    			<input type="submit">
+    			</form>
+    			</body>
     """
     return HTMLResponse(content=content)
+
+## new テンプレート関連の設定 (jinja2)
+#templates = Jinja2Templates(directory="templates")
+#jinja_env = templates.env  # Jinja2.Environment : filterやglobalの設定用
+#
+#def index(request: Request):

@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+<br>
+<div class="row">
+    <div class="col-md-10">
+        <h1>VGG Classifier</h1>
+    </div>
+</div>
+    <div class="row">
+        <form action="/uploadfiles/" enctype="multipart/form-data" method="post">
+            <input name="files" type="file" multiple>
+            <!---
+            <label>
+                <span class="btn btn-primary">
+                Choose File
+                <input type="file" style="display:none" multiple>
+                </span>
+            </label>
+            -->
+            <input class='btn btn-primary' type="submit">
+        </form>
+    </div>
+
+<hr>
+<p> <b>mews-base</b></p>
+
+{% endblock %}
