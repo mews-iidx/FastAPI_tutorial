@@ -4,29 +4,34 @@
         {% for result in results %}
         <div class="row">
             <h2> {{ result.filename }} </h2>
-            <img src='static/lena.png'>
         </div>
         <div class="row">
-            <div class='col'>
+            <div class='col-md-6'>
+            <img src='static/{{result.filename}}' class='img-fluid'>
+            </div>
+            <div class='col-md-6'>
                 <b> Results</b>
-				<table>
+                <div class='col'>
+				<table class='table'>
 					<tbody>
 						<tr>
-							<td>name </td>
-							<td>prob </td>
+							<th scope='col'>name </th>
+							<th scope='col'>prob </th>
 						</tr>
-					    {% for class in result.classes %}
+					    {% for class in results[loop.index0] %}
 						<tr>
                             <td> {{ result.classes[loop.index0] }} </td>
                             <td> {{ result.probs[loop.index0] }} </td>
+                            <td> {{ loop.index0 }} </td>
 						</tr>
 					    {% endfor %}
 					</tbody>
 				</table>
+                </div>
             </div>
         </div>
         {% endfor %}
+<a href=/>top </a>
 <hr>
-<p> <b>mews-base</b></p>
 
 {% endblock %}

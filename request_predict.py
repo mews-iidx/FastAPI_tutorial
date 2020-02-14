@@ -24,14 +24,13 @@ def byte2cv(img_binary):
 	img_pil = Image.open(img_binarystream)
 	img_numpy = np.asarray(img_pil)
 	img_numpy_bgr = cv2.cvtColor(img_numpy, cv2.COLOR_RGBA2BGR)
-	return img_numpy_bgr
+	return np.array(img_numpy_bgr, dtype=np.uint8)
 
 
-def request_bins(binaries, endpoint):
+def request_bins(binaries, endpoint ):
     imgs = []
     for binary in binaries:
         image = byte2cv(binary)
-        print(image.shape)
         target_size = (224, 224)
         img_resized = cv2.resize(image, target_size)
         imgs.append(img_resized.tolist())

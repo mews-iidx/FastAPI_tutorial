@@ -25,24 +25,34 @@ async def create_upload_files(request: Request, files: List[UploadFile] = File(.
     endpoint = os.getenv("ENDPOINT")
     rets = request_predict.request_bins(bins, endpoint)
 
-    placeholder = {
-            'filename' : 'filename', 
-            'classes' : [],
-            'probs' : []
-        }
-    names = []
-    probs = []
+
+#save images
+    for f, b in zip(fnames, bins):
+        img = request_predict.byte2cv(b)
+        fname = os.path.join('static', f)
+        cv2.imwrite(fname, img)
 
     return_dict = []
     for img_file, ret in zip( fnames, rets):
+        placeholder = {
+                'filename' : 'filename', 
+                'classes' : [],
+                'probs' : []
+            }
+        names = []
+        probs = []
         for _, name, prob in ret:
             names.append(name)
             probs.append(prob)
         placeholder['filename'] = img_file
+        print(placeholder['filename'])
         placeholder['classes'] = names
         placeholder['probs'] = probs
+
         return_dict.append(placeholder)
         
+    for r in return_dict:
+        print(r)
     return templates.TemplateResponse('upload_files.html', {'request' : request, 'results' : return_dict  })
             
 
